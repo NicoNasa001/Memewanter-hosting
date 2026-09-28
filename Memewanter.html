@@ -1,0 +1,707 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MemeWanter.com</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.65),
+                    rgba(0, 0, 0, 0.85)
+                ),
+                url("https://tse1.explicit.bing.net/th/id/OIP.3joouMsj_4KxG57ATMSmsAHaE3?r=0&rs=1&pid=ImgDetMain&o=7&rm=3");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 15px 40px;
+
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ffcc00;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 75vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            margin-bottom: 15px;
+
+            text-shadow:
+                0 0 10px #000,
+                0 0 30px rgba(255, 255, 255, 0.3);
+
+            animation: aparecer 1s ease;
+        }
+
+        .hero h1 span {
+            color: #ffcc00;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+
+            color: #ddd;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-button {
+            display: inline-block;
+
+            padding: 15px 30px;
+
+            background: #ffcc00;
+            color: black;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            border-radius: 30px;
+
+            transition: 0.3s;
+        }
+
+        .hero-button:hover {
+            transform: scale(1.08);
+            background: white;
+        }
+
+        /* =========================
+           CONTENEDOR
+        ========================= */
+
+        .container {
+            width: min(1200px, 92%);
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 60px 0 30px;
+
+            text-shadow: 2px 2px 5px black;
+        }
+
+        /* =========================
+           BUSCADOR
+        ========================= */
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+
+            margin: 30px auto 50px;
+        }
+
+        .search-box input {
+            width: min(600px, 90%);
+
+            padding: 16px 20px;
+
+            border: none;
+            border-radius: 30px;
+
+            outline: none;
+
+            font-size: 1rem;
+        }
+
+        /* =========================
+           MEMES
+        ========================= */
+
+        .memes {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 30px;
+
+            padding-bottom: 80px;
+        }
+
+        .meme-card {
+            background: rgba(20, 20, 20, 0.85);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.5);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            transition: 0.3s;
+
+            animation: aparecer 0.8s ease;
+        }
+
+        .meme-card:hover {
+            transform: translateY(-10px) scale(1.02);
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .meme-card img {
+            width: 100%;
+            height: 240px;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .meme-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .meme-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        audio {
+            width: 100%;
+        }
+
+        /* =========================
+           FORMULARIO
+        ========================= */
+
+        .submit-section {
+            margin: 50px auto 100px;
+
+            max-width: 700px;
+
+            padding: 35px;
+
+            text-align: center;
+
+            background: rgba(0, 0, 0, 0.75);
+
+            border-radius: 25px;
+
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .submit-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .submit-section p {
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .submit-section form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .submit-section input {
+            flex: 1;
+
+            min-width: 220px;
+
+            padding: 15px;
+
+            border: none;
+            border-radius: 10px;
+
+            outline: none;
+        }
+
+        .submit-section button {
+            padding: 15px 25px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #ffcc00;
+            color: black;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .submit-section button:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            background: rgba(0, 0, 0, 0.8);
+
+            color: #aaa;
+        }
+
+        footer strong {
+            color: #ffcc00;
+        }
+
+        /* =========================
+           ANIMACIONES
+        ========================= */
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           CELULAR
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            nav div:last-child {
+                display: none;
+            }
+
+            .hero {
+                min-height: 65vh;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            Meme<span>Wanter</span>
+        </div>
+
+        <div>
+            <a href="#inicio">Inicio</a>
+            <a href="#memes">Memes</a>
+            <a href="#enviar">Enviar meme</a>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero" id="inicio">
+
+        <h1>Meme<span>Wanter</span></h1>
+
+        <p>
+            La colección de memes que nunca sabías que necesitabas.
+            Encuentra imágenes, sonidos y memes clásicos.
+        </p>
+
+        <a class="hero-button" href="#memes">
+            Explorar memes
+        </a>
+
+    </section>
+
+
+    <main class="container">
+
+        <!-- BUSCADOR -->
+
+        <h2 class="section-title">Buscar memes</h2>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="buscador"
+                placeholder="Busca un meme..."
+                onkeyup="buscarMeme()"
+            >
+
+        </div>
+
+
+        <!-- MEMES -->
+
+        <h2 class="section-title" id="memes">
+            Memes
+        </h2>
+
+        <div class="memes">
+
+
+            <!-- A Bloop -->
+
+            <article class="meme-card">
+
+                <img
+                    src="https://i.pinimg.com/736x/bb/4b/63/bb4b636ea5a0cccbd808391d9039a039.jpg"
+                    alt="A Bloop meme"
+                >
+
+                <div class="meme-info">
+
+                    <h3>A Bloop</h3>
+
+                    <audio
+                        src="a.-bloop-made-with-Voicemod.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+
+            </article>
+
+
+            <!-- Banana Cat -->
+
+            <article class="meme-card">
+
+                <img
+                    src="https://preview.redd.it/happy-banana-cat-v0-06lnbp9rpnva1.jpg?auto=webp&s=1f936fd63f5b8a49c0fcf1d88bb963642a26c463"
+                    alt="Banana Cat meme"
+                >
+
+                <div class="meme-info">
+
+                    <h3>Banana Cat</h3>
+
+                    <audio
+                        src="cry-banana-cat.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+
+            </article>
+
+
+            <!-- Galaxy -->
+
+            <article class="meme-card">
+
+                <img
+                    src="https://tse3.mm.bing.net/th/id/OIP.-7Mx047wduiEsmtJXgDRYQHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Galaxy meme"
+                >
+
+                <div class="meme-info">
+
+                    <h3>Galaxy Meme</h3>
+
+                    <audio
+                        src="galaxy-meme.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+
+            </article>
+
+
+            <!-- Noot Noot -->
+
+            <article class="meme-card">
+
+                <img
+                    src="https://tse4.mm.bing.net/th/id/OIP.2DrXyAtQV-qpetaQtZ_5ggHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Noot Noot meme"
+                >
+
+                <div class="meme-info">
+
+                    <h3>Noot Noot</h3>
+
+                    <audio
+                        src="Noot Noot Meme Song.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+
+            </article>
+
+
+            <!-- Nyan Cat -->
+
+            <article class="meme-card">
+
+                <img
+                    src="https://tse1.mm.bing.net/th/id/OIP.Um14oq4pqYS-DcNywJiIzAHaEo?r=0&w=2880&h=1800&rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Nyan Cat meme"
+                >
+
+                <div class="meme-info">
+
+                    <h3>Nyan Cat</h3>
+
+                    <audio
+                        src="Nyanyanyanyanyanyanya.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+
+            </article>
+            
+            <article class="meme-card">
+
+                <img
+                    src="https://tse2.mm.bing.net/th/id/OIP.AHJqMxGJSNO0eNdeFatOzgHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Rat meme"
+                >
+                <div class="meme-info">
+
+                    <h3>Rat meme</h3>
+
+                    <audio
+                        src="chess-rat-dance.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+            </article>
+
+            <article class="meme-card">
+
+                <img
+                    src="https://i.ytimg.com/vi/jLYXn4KYnYI/hqdefault.jpg"
+                    alt="The Rook meme"
+                >
+
+                <div class="meme-info">
+
+                    <h3>The Rooooooooooooooook</h3>
+
+                    <audio
+                        src="the-roooooook.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+
+            </article>
+
+
+            <!-- Trollface -->
+
+            <article class="meme-card">
+
+                <img
+                    src="https://tse2.mm.bing.net/th/id/OIP.VSYOrbMFq2l4U-ADKRdXoAAAAA?r=0&w=220&h=201&rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Trollface meme"
+                >
+
+                <div class="meme-info">
+
+                    <h3>Trollface</h3>
+
+                    <audio
+                        src="trollface-music.mp3"
+                        controls>
+                    </audio>
+
+                </div>
+
+            </article>
+        </div>
+
+
+        <!-- ENVIAR MEME -->
+
+        <section class="submit-section" id="enviar">
+
+            <h2>¿Qué meme falta?</h2>
+
+            <p>
+                Ayúdanos a completar la colección.
+                Dinos qué meme deberíamos agregar.
+            </p>
+
+            <form
+                action="https://formspree.io/f/mojgrbyw"
+                method="POST"
+            >
+
+                <input
+                    type="text"
+                    name="Meme"
+                    placeholder="Escribe el nombre del meme..."
+                    required
+                >
+
+                <button type="submit">
+                    Enviar
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            <strong>MemeWanter.com</strong>
+            — La colección de memes.
+        </p>
+
+    </footer>
+
+
+    <!-- BUSCADOR -->
+
+    <script>
+
+        function buscarMeme() {
+
+            let texto =
+                document
+                .getElementById("buscador")
+                .value
+                .toLowerCase();
+
+            let memes =
+                document.querySelectorAll(".meme-card");
+
+            memes.forEach(function(meme) {
+
+                let nombre =
+                    meme
+                    .querySelector("h3")
+                    .textContent
+                    .toLowerCase();
+
+                if (nombre.includes(texto)) {
+
+                    meme.style.display = "block";
+
+                } else {
+
+                    meme.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
